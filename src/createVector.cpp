@@ -1,6 +1,4 @@
  #include <iostream>
- #include <thread>
- #include <chrono>
  #include <fstream>
  #include <string>
  #include <fstream>
@@ -8,18 +6,15 @@
  #include <vector>
  #include "stockClass.h"
 
-vector<stockClass> createVector(ifstream& fileReader){
-    vector<stockClass> stocks;
-    stringstream ss;
-    string line;
-    
-    while(getline(fileReader, line)){
-       stockClass tempStock;
+
+stockClass parse_data(const string& line){
+    stockClass tempStock;
         string tempTick;
         string tempName;
         string tempPrice;
         string tempMovement;
-        ss.clear();
+        stringstream ss;
+    
         ss.str(line);
         
         getline(ss, tempTick, '|');
@@ -31,8 +26,29 @@ vector<stockClass> createVector(ifstream& fileReader){
         tempStock.setPrice(stod(tempPrice));
         tempStock.setMovement(stod(tempMovement));
         tempStock.setTicker(tempTick);
+
+    
+    
+    return tempStock;
+}
+
+
+
+vector<stockClass> createVector(ifstream& fileReader){
+    vector<stockClass> stocks;
+    stringstream ss;
+    string line;
+    
+    
+    
+    while(getline(fileReader, line)){
+        stringstream ss;
+        ss.str(line);
         
-        stocks.push_back(tempStock);
+        if (line.empty()) continue;
+
+        stocks.push_back(parse_data(line));
+        
     }
     
     return stocks;

@@ -1,4 +1,5 @@
 #include "stockClass.h"
+#include <iostream>
 
 using namespace std;
 
@@ -43,7 +44,9 @@ using namespace std;
         void stockClass::setMovement(double movement){
             this->movement = movement;
         }
-        
+        void stockClass::printData() const{
+            cout << this->price << " " << this->name << " " << this->movement << " " << this->ticker << " " << endl;
+        }
         
         
         

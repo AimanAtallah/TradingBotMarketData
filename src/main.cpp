@@ -1,6 +1,8 @@
- #include <iostream>
- #include <fstream>
- 
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include "createVector.h"
+#include "ticker_view.h"
  using namespace std;
  
  int main(){
@@ -11,16 +13,18 @@
      
     
     ifstream fileReader;
-    
+     vector<stockClass> myVec;
      
-    fileReader.open("stocks.txt");
+    fileReader.open("data/stocks.txt");
     
     if(!fileReader.is_open()){
         std::cerr << "could not open file";
         return 1;
     }
     
-    
+     myVec = createVector(fileReader);
+     
+     renderTicker(myVec);
     
 
     return 0;

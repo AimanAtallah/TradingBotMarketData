@@ -19,6 +19,7 @@ class stockClass{
         void setPrice(double price);
         double getMovement() const;
         void setMovement(double movement);
+        void printData() const;
     private:
         double price;
         double movement;
