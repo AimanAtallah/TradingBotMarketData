@@ -9,15 +9,17 @@
 #include <string>
 #include <chrono>
 #include <thread>
+#include <iomanip>
 #include "stockClass.h"
 
 
 void renderTicker(const std::vector<stockClass>& stocks){
     int num_of_stocks = stocks.size();
-    int vector_Data_Size = (num_of_stocks * 4) - num_of_stocks;
-    const int FRAMES_PER_SECOND = 1;
-    const int DISPLAY_LIMIT = 8;
+    int vector_Data_Size = num_of_stocks * 3;
+    //const int FRAMES_PER_SECOND = 1;
+    const int DISPLAY_LIMIT = 8;//include an if-gaurd in case limit > stock.size()
     const int FIRST_ELEMENT = 0;
+    const int  OFFSET = 1;
     
     std::vector<string> source(vector_Data_Size);
     std::vector<string> tickerName(num_of_stocks, " ");
@@ -32,8 +34,15 @@ void renderTicker(const std::vector<stockClass>& stocks){
         
         tickerNameSource.at(name_Counter) = stock.getTicker();
         name_Counter++;
-    
         
+        /*===================================================
+        /    i need to turn this from three seperate entries
+        /    per stock to one single entry in one concotated
+        /    string.
+        /
+        /
+        /
+        =======================================================*/
         source.at(counter) = stock.getName();
         counter++;
         
@@ -60,29 +69,28 @@ void renderTicker(const std::vector<stockClass>& stocks){
         
         //Load Stocks
         for(int i = vector_Data_Size - 1; i > FIRST_ELEMENT; --i){
-            tickerData.at(i) = tickerData.at(i - 1);
+            tickerData.at(i) = tickerData.at(i - OFFSET);
         }
         for(int i = num_of_stocks - 1; i > FIRST_ELEMENT; --i){
-            tickerName.at(i) = tickerName.at(i - 1);
+            tickerName.at(i) = tickerName.at(i - OFFSET);
         }
         
         
         //Display stocks
-        for(int i = num_of_stocks - 1; i >= FIRST_ELEMENT; --i){
-            std::cout << tickerName.at(i);
+        for(int i = DISPLAY_LIMIT; i > FIRST_ELEMENT; --i){
+            std::cout << std::left << std::setw(13) << "\t" << tickerName.at(i);//Fix formatting for stock ticker display names
         }
-        
         std::cout << "\n";
         
-        for(int i = DISPLAY_LIMIT; i >= FIRST_ELEMENT; --i){
+        for(int i = DISPLAY_LIMIT; i > FIRST_ELEMENT; --i){
             std::cout << tickerData.at(i) << " | ";
         }
-        
+    
         std::cout << std::flush;
         
         
         
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMES_PER_SECOND));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1200));
         
         
     }

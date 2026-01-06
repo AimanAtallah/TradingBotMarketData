@@ -1,20 +1,21 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <stdexcept>
 #include "createVector.h"
 #include "ticker_view.h"
- using namespace std;
  
+
+using namespace std;
+
+
  int main(){
 // 1. make the menu interface
 // 2. connect it to live market data
 // 3. possibly add trading interface
-
      
-    
+    // place this into its own file openFile()
     ifstream fileReader;
-     vector<stockClass> myVec;
-     
     fileReader.open("data/stocks.txt");
     
     if(!fileReader.is_open()){
@@ -22,7 +23,12 @@
         return 1;
     }
     
-     myVec = createVector(fileReader);
+     vector<stockClass> myVec;
+     try{
+         myVec = createVector(fileReader);
+     }catch(const runtime_error& e){
+         cerr << e.what() << endl;
+     }
      
      renderTicker(myVec);
     

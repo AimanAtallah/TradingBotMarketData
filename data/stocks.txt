@@ -1,10 +1,10 @@
-"AAPL|Apple Inc|189.45|1.23"
-"MSFT|Microsoft Corp|412.67|-0.84"
-"GOOGL|Alphabet Inc|151.92|0.56"
-"AMZN|Amazon.com Inc|168.14|-2.11"
-"NVDA|NVIDIA Corp|495.32|3.78"
-"TSLA|Tesla Inc|248.91|-1.64"
-"META|Meta Platforms|353.27|0.92"
-"AMD|Advanced Micro Devices|142.08|2.45"
-"INTC|Intel Corp|48.73|-0.37"
-"NFLX|Netflix Inc|486.55|1.09"
+AAPL|Apple Inc|189.45|1.23
+MSFT|Microsoft Corp|412.67|-0.84
+GOOGL|Alphabet Inc|151.92|0.56
+AMZN|Amazon.com Inc|168.14|-2.11
+NVDA|NVIDIA Corp|495.32|3.78
+TSLA|Tesla Inc|248.91|-1.64
+META|Meta Platforms|353.27|0.92
+AMD|Advanced Micro Devices|142.08|2.45
+INTC|Intel Corp|48.73|-0.37
+NFLX|Netflix Inc|486.55|1.09

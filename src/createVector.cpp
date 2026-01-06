@@ -4,35 +4,49 @@
  #include <fstream>
  #include <sstream>
  #include <vector>
+ #include <cctype>
+ #include <stdexcept>
  #include "stockClass.h"
+
+
+
 
 
 stockClass parse_data(const string& line){
     stockClass tempStock;
-        string tempTick;
-        string tempName;
-        string tempPrice;
-        string tempMovement;
-        stringstream ss;
+    string tempTick;
+    string tempName;
+    string tempPrice;
+    string tempMovement;
+    stringstream ss;
+
+    ss.str(line);
     
-        ss.str(line);
-        
-        getline(ss, tempTick, '|');
-        getline(ss, tempName, '|');
-        getline(ss, tempPrice, '|');
-        getline(ss,tempMovement, '|');
-        
-        tempStock.setName(tempName);
-        tempStock.setPrice(stod(tempPrice));
-        tempStock.setMovement(stod(tempMovement));
-        tempStock.setTicker(tempTick);
+    getline(ss, tempTick, '|');
+    getline(ss, tempName, '|');
+    getline(ss, tempPrice, '|');
+    getline(ss,tempMovement, '|');
+    
+    tempStock.setName(tempName);
+    tempStock.setTicker(tempTick);
+    
+    //this is need incase file is incorecctly formatted and stod fails
+    try {
+        tempStock.setPrice(std::stod(tempPrice));
+        tempStock.setMovement(std::stod(tempMovement));
+    }
+    catch (const std::invalid_argument&) {
+        throw std::runtime_error("file incorrectly formatted");
+    }
+    catch (const std::out_of_range&) {
+        throw std::runtime_error("file incorrectly formatted");
+    }
+
 
     
     
     return tempStock;
 }
-
-
 
 vector<stockClass> createVector(ifstream& fileReader){
     vector<stockClass> stocks;
