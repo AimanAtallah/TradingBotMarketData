@@ -7,7 +7,6 @@
 #ifndef TICKER_VIEW
 #define TICKER_VIEW
 
-
 void clearScreen();
 void renderTicker(const std::vector<stockClass>& stocks);
 
