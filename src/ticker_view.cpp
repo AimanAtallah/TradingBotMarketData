@@ -17,12 +17,41 @@
 
 
 void clearScreen(){
-    std::cout << "\033[2J\033[H";
+    std::cout << "\033[2J\033[H\033[3J" << std::flush;
 }
 
 
+std::vector<string> fillSource(const std::vector<stockClass>& stocks){
+    int num_of_stocks = stocks.size();
+    std::vector<string> source(num_of_stocks);
+    int counter = 0;
+    
+    for(const auto& stock : stocks){
+        std::string tempLine;
+        std::ostringstream oss;
+        
+        oss << std::left
+        << stock.getTicker()<<" "
+        << stock.getName()  <<" "
+        << stock.getPrice() <<" "
+        << stock.getMovement();
+        
+        tempLine = oss.str();
+        
+        
+        source.at(counter) = tempLine;
+        
+        counter++;
+        
+    }
+    
+    return source;
+}
+
+
+
+
 void renderTicker(const std::vector<stockClass>& stocks){
-    const int FRAMES_PER_SECOND = 1;
     const int FIRST_ELEMENT = 0;
     const int  OFFSET = 1;
     int num_of_stocks = stocks.size();
@@ -30,9 +59,8 @@ void renderTicker(const std::vector<stockClass>& stocks){
     int DISPLAY_LIMIT;
     
     
-    if(num_of_stocks == 0) return;//safety check
+    if(num_of_stocks == 0) return; //safety check
     
-    std::vector<string> source(num_of_stocks);
     std::vector<string> tickerData(num_of_stocks);
     
     if(num_of_stocks <= 6 && num_of_stocks > 0){
@@ -42,27 +70,7 @@ void renderTicker(const std::vector<stockClass>& stocks){
     }
     
    
-    
-    
-    for(const auto& stock : stocks){
-        std::string tempLine;
-        std::ostringstream oss;
-        
-        oss << std::left
-            << stock.getTicker()<<" "
-            << stock.getName()  <<" "
-            << stock.getPrice() <<" "
-            << stock.getMovement();
-        
-        tempLine = oss.str();
-        
-        
-        source.at(counter) = tempLine;
-        
-        counter++;
-
-    }
-    counter = 0;
+    auto source = fillSource(stocks);
     
     while(true){
         
@@ -71,7 +79,6 @@ void renderTicker(const std::vector<stockClass>& stocks){
         counter = (counter + 1) % num_of_stocks;
         
         clearScreen();
-        
         //Load Stocks
         for(int i = num_of_stocks - 1; i > FIRST_ELEMENT; --i){
             tickerData.at(i) = tickerData.at(i - OFFSET);
@@ -84,8 +91,7 @@ void renderTicker(const std::vector<stockClass>& stocks){
     
         std::cout << std::flush;
         
-        std::this_thread::sleep_for(std::chrono::milliseconds(1200/FRAMES_PER_SECOND ));
-        
+        std::this_thread::sleep_for(std::chrono::seconds(1));
         
     }
     

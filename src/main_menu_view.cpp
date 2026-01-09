@@ -17,6 +17,7 @@
 
 void mainMenu(){
     std::vector<stockClass> myVec;
+    char c;
     
     try{
         std::ifstream file = openFile();
@@ -26,14 +27,15 @@ void mainMenu(){
         return;
     }
     
-    
-    std::thread renderThread(renderTicker, std::cref(myVec));
-    renderThread.detach();
-    
-    std::cout << std::endl;
-    
-    sideMenu();
-    sideMenu();
-    
-
+  
+        std::thread renderThread(renderTicker, std::cref(myVec));
+        renderThread.detach();
+        
+        std::cout << std::endl;
+        
+        sideMenu();
+        sideMenu();
+        
+    std::cin >> c;
+        
 }
