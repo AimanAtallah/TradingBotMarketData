@@ -1,4 +1,8 @@
-#include "main_menu_view.h"
+#include "market_data_service.h"
+#include <iostream>
+#include <string>
+#include <cpr/cpr.h>
+
 
 
 
@@ -9,7 +13,14 @@
 // 3. possibly add trading interface
          
      
-         mainMenu();
+     std::string ticker;
+     std::cout << "enter a ticker: ";
+     std::cin >> ticker;
+     
+    auto response = getMarketData(ticker);
+     
+    
+     std::cout << response.text << std::endl;
      
     
 

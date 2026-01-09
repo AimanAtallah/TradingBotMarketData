@@ -10,44 +10,9 @@
 #include <sstream>
 #include <chrono>
 #include <thread>
-#include <iomanip>
 #include "stockClass.h"
+#include "ticker_view_model.h"
 #include "ticker_view.h"
-
-
-
-void clearScreen(){
-    std::cout << "\033[2J\033[H\033[3J" << std::flush;
-}
-
-
-std::vector<string> fillSource(const std::vector<stockClass>& stocks){
-    int num_of_stocks = stocks.size();
-    std::vector<string> source(num_of_stocks);
-    int counter = 0;
-    
-    for(const auto& stock : stocks){
-        std::string tempLine;
-        std::ostringstream oss;
-        
-        oss << std::left
-        << stock.getTicker()<<" "
-        << stock.getName()  <<" "
-        << stock.getPrice() <<" "
-        << stock.getMovement();
-        
-        tempLine = oss.str();
-        
-        
-        source.at(counter) = tempLine;
-        
-        counter++;
-        
-    }
-    
-    return source;
-}
-
 
 
 
@@ -94,6 +59,4 @@ void renderTicker(const std::vector<stockClass>& stocks){
         std::this_thread::sleep_for(std::chrono::seconds(1));
         
     }
-    
-    
 }
