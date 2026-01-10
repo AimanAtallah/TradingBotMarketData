@@ -1,70 +1,62 @@
- #include <iostream>
- #include <fstream>
- #include <string>
- #include <fstream>
- #include <sstream>
- #include <vector>
- #include <cctype>
- #include <stdexcept>
- #include "stockClass.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <vector>
+#include <cctype>
+#include <stdexcept>
+#include "stockClass.h"
+#include "createVector.h"
 
-
-
-
-
-stockClass parse_data(const string& line){
+stockClass parse_data(const std::string& line){
     stockClass tempStock;
-    string tempTick;
-    string tempName;
-    string tempPrice;
-    string tempMovement;
-    stringstream ss;
 
-    ss.str(line);
+    std::string tempTick;
+    std::string tempOpen;
+    std::string tempVolume;
+    std::string tempHigh;
+    std::string tempLow;
+    std::string tempDateTrash;
+    std::string tempClose;
+
+    std::stringstream ss(line);
     
-    getline(ss, tempTick, '|');
-    getline(ss, tempName, '|');
-    getline(ss, tempPrice, '|');
-    getline(ss,tempMovement, '|');
+    std::getline(ss, tempTick, ',');
+    std::getline(ss, tempDateTrash, ',');
+    std::getline(ss, tempOpen, ',');
+    std::getline(ss, tempHigh, ',');
+    std::getline(ss, tempLow, ',');
+    std::getline(ss, tempClose, ',');
+    std::getline(ss, tempVolume, ',');
+
     
-    tempStock.setName(tempName);
     tempStock.setTicker(tempTick);
+    try{
+        tempStock.setOpen(std::stod(tempOpen));
+        tempStock.setHigh(std::stod(tempHigh));
+        tempStock.setLow(std::stod(tempLow));
+        tempStock.setClose(std::stod(tempClose));
+        tempStock.setVolume(std::stoll(tempVolume));
+    }catch(const std::invalid_argument&){
+       throw std::runtime_error("failed to convert");
+    }catch(const std::out_of_range&){
+        throw std::runtime_error("failed to convert");
+    }
     
-    //this is need incase file is incorecctly formatted and stod fails
-    try {
-        tempStock.setPrice(std::stod(tempPrice));
-        tempStock.setMovement(std::stod(tempMovement));
-    }
-    catch (const std::invalid_argument&) {
-        throw std::runtime_error("file incorrectly formatted");
-    }
-    catch (const std::out_of_range&) {
-        throw std::runtime_error("file incorrectly formatted");
-    }
+    
 
-
-    
-    
     return tempStock;
 }
 
-vector<stockClass> createVector(ifstream& fileReader){
-    vector<stockClass> stocks;
-    stringstream ss;
-    string line;
-    
-    
-    
-    while(getline(fileReader, line)){
-        stringstream ss;
-        ss.str(line);
-        
-        if (line.empty()) continue;
 
+std::vector<stockClass> createVector(std::ifstream& fileReader){
+    std::vector<stockClass> stocks;
+    std::string line;
+    
+    while (std::getline(fileReader, line)) {
+        if (line.empty()) continue;
         stocks.push_back(parse_data(line));
-        
     }
     
     return stocks;
-    
 }

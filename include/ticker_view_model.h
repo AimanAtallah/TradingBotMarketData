@@ -8,7 +8,7 @@
 #define TICKER_VIEW_MODEL
 
 void clearScreen();
-std::vector<string> fillSource(const std::vector<stockClass>& stocks);
+std::vector<std::string> fillSource(const std::vector<stockClass>& stocks);
 
 
 

@@ -20,9 +20,8 @@ void clearScreen(){
 }
 
 
-std::vector<string> fillSource(const std::vector<stockClass>& stocks){
-    int num_of_stocks = stocks.size();
-    std::vector<string> source(num_of_stocks);
+std::vector<std::string> fillSource(const std::vector<stockClass>& stocks){
+    std::vector<std::string> source(stocks.size());
     int counter = 0;
     
     for(const auto& stock : stocks){
@@ -30,10 +29,12 @@ std::vector<string> fillSource(const std::vector<stockClass>& stocks){
         std::ostringstream oss;
         
         oss << std::left
-        << stock.getTicker()<<" "
-        << stock.getName()  <<" "
-        << stock.getPrice() <<" "
-        << stock.getMovement();
+        << stock.getTicker()
+        << stock.getOpen()
+        << stock.getHigh()
+        << stock.getLow()
+        << stock.getClose()
+        << stock.getVolume();
         
         tempLine = oss.str();
         

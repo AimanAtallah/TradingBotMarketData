@@ -13,7 +13,7 @@
 
 
 stockClass parse_data(const std::string& line);
-vector<stockClass> createVector(std::ifstream& fileReader);
+std::vector<stockClass> createVector(std::ifstream& fileReader);
 
 
 #endif // !CREATEVECTOR_H

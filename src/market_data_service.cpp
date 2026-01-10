@@ -11,14 +11,7 @@
 
 
 //call stock data from
-cpr::Response getMarketData(const std::string& ticker_symbol){
-    /*
-     REMOVE BEFORE API BEFORE COMMITING !!!!!!
-     
-     
-     */
-    
-    const std::string API_KEY = "";
+cpr::Response getMarketData(const std::string& ticker_symbol, const std::string& API_KEY){
 
     auto response = cpr::Get(cpr::Url("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="
                            +ticker_symbol+"&apikey="

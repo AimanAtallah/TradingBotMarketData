@@ -26,16 +26,15 @@ void renderTicker(const std::vector<stockClass>& stocks){
     
     if(num_of_stocks == 0) return; //safety check
     
-    std::vector<string> tickerData(num_of_stocks);
+    auto source = fillSource(stocks);
+    std::vector<std::string> tickerData(num_of_stocks);
     
     if(num_of_stocks <= 6 && num_of_stocks > 0){
         DISPLAY_LIMIT = num_of_stocks - 1;
     }else{
         DISPLAY_LIMIT = 6;
     }
-    
-   
-    auto source = fillSource(stocks);
+
     
     while(true){
         
