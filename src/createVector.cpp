@@ -8,6 +8,7 @@
 #include "stockClass.h"
 #include "createVector.h"
 
+//---------------------------------------------------------------------------------------------------------------------------------//
 stockClass parse_data(const std::string& line){
     stockClass tempStock;
 
@@ -51,6 +52,7 @@ stockClass parse_data(const std::string& line){
     return tempStock;
 }
 
+//---------------------------------------------------------------------------------------------------------------------------------//
 
 std::vector<stockClass> createVector(std::ifstream& fileReader){
     std::vector<stockClass> stocks;
@@ -71,3 +73,4 @@ std::vector<stockClass> createVector(std::ifstream& fileReader){
     
     return stocks;
 }
+//---------------------------------------------------------------------------------------------------------------------------------//

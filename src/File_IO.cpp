@@ -14,7 +14,7 @@
 #include <cpr/cpr.h>
 #include "File_IO.h"
 
-
+//---------------------------------------------------------------------------------------------------------------------------------//
 std::ifstream openFile(){
     std::ifstream fileReader;
     
@@ -27,51 +27,69 @@ std::ifstream openFile(){
     return fileReader;
 }
 
+//---------------------------------------------------------------------------------------------------------------------------------//
+
 void writeToFile(const cpr::Response& response, const std::string& path, const std::string& tickerName){
     std::istringstream iss;
     std::string line;
     std::ofstream data(path);
-    
-    iss.str(response.text);
-    
-    while(std::getline(iss, line)){
-        data << tickerName << "," << line << "\n";
+    if(!data.is_open()){
+        std::cerr << "Could not save ticker data due to file error: " << path << "\n";
+        return;
+    }
+    if(response.status_code != 200){
+        std::cerr << "Could not retrieve market data " << tickerName << "\n";
+        return;
     }
     
+    if(response.status_code == 200){
+        iss.str(response.text);
+        while(std::getline(iss, line)){
+            data << tickerName << "," << line << "\n";
+        }
+    }
     
 }
 
-void createTickerFile(const std::vector<std::string>& fileName)
-{
-    std::ifstream fromFile;
-    std::ofstream toTicker;
-    std::string  line;
+//---------------------------------------------------------------------------------------------------------------------------------//
 
+void createTickerFile(const std::vector<std::string>& fileFolder){
+    std::ifstream fromFile; //reads from file
+    std::ofstream toTicker; //writes to file
+    
     toTicker.open("data/tickerFile.txt");
     if (!toTicker.is_open()) {
         std::cerr << "Failed to open tickerFile.txt for writing\n";
         return;
     }
-
-    for (int i = 0; i < fileName.size(); ++i) {
-
-        fromFile.open(fileName.at(i));
-        if (!fromFile.is_open()) {
-            std::cerr << "Failed to open: " << fileName.at(i) << "\n";
+    
+    for(const auto& file : fileFolder){
+        fromFile.open(file);
+        std::string line; // stores lastet data from each file
+        
+        if(!fromFile.is_open()){
+            std::cerr << "Failed to open: " << file << "\n";
             continue;
         }
+        if(!std::getline(fromFile, line)){
+            std::cerr << "File " << file << " is empty.\n";  //checks for empty file and removes header
+            fromFile.close();
+            fromFile.clear();
+            continue;
+        }
+      
 
-        std::getline(fromFile, line);   // skip first line
-
-        for (int j = 0; j <= 0; ++j) {
-            std::getline(fromFile, line);
+        std::getline(fromFile, line);
+        
+        if(!line.empty()){
             toTicker << line << "\n";
         }
-
+        
         fromFile.close();
+        fromFile.clear();
     }
-
+    
     toTicker.close();
 }
 
-
+//---------------------------------------------------------------------------------------------------------------------------------//

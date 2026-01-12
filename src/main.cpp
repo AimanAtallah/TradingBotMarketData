@@ -11,37 +11,6 @@
 #include "createVector.h"
 
 
-std::vector<std::string> getStocks(){
-    bool key = true;
-    std::string apiKey;
-    std::vector<std::string> fileNames;
-    std::string ticker;
-    std::string path;
-    
-    
-    
-    std::cout << "Enter API key: ";
-    std::cin >> apiKey;
-    
-    while(ticker != "q" ){
-        std::cout << "enter a ticker: ";
-        std::cin >> ticker;
-        
-        if(ticker != "q"){
-            auto response = getMarketData(ticker, apiKey);
-            path ="data/" + ticker + ".txt";
-            fileNames.push_back(path);
-            
-            writeToFile(response, path, ticker);
-        }
-        
-    }
-    return fileNames;
-}
-
-
-
-
 
  int main(){
      std::vector<std::string> fileNames;
