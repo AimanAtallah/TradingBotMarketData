@@ -29,6 +29,9 @@ stockClass parse_data(const std::string& line){
     std::getline(ss, tempClose, ',');
     std::getline(ss, tempVolume, ',');
 
+    for(auto& c : tempTick){
+        c = std::toupper(c);
+    }
     
     tempStock.setTicker(tempTick);
     try{
@@ -43,7 +46,7 @@ stockClass parse_data(const std::string& line){
         throw std::runtime_error("failed to convert");
     }
     
-    
+    //test case tempStock.printData();
 
     return tempStock;
 }
@@ -52,11 +55,19 @@ stockClass parse_data(const std::string& line){
 std::vector<stockClass> createVector(std::ifstream& fileReader){
     std::vector<stockClass> stocks;
     std::string line;
+    int count = 0;
     
     while (std::getline(fileReader, line)) {
         if (line.empty()) continue;
-        stocks.push_back(parse_data(line));
+        try {
+            stocks.push_back(parse_data(line));
+            count++;
+        } catch (const std::exception& e) {
+            std::cerr << "PARSE ERROR on line:\n" << line << "\n";
+            std::cerr << e.what() << "\n";
+        }
     }
+    //test case std::cout << "This funtion should run 6 times it ran: " << count << std::endl;
     
     return stocks;
 }

@@ -3,6 +3,7 @@
 #include <cpr/cpr.h>
 #include <vector>
 #include <fstream>
+#include <filesystem>
 #include "File_IO.h"
 #include "market_data_service.h"
 #include "stockClass.h"
@@ -43,21 +44,27 @@ std::vector<std::string> getStocks(){
 
 
  int main(){
-// 1. make the menu interface
-// 2. connect it to live market data
-// 3. possibly add trading interface
-      
+     std::vector<std::string> fileNames;
+
+     for(auto& entry : std::filesystem::directory_iterator("data")){
+         fileNames.push_back(entry.path().string());
+     }
+    
+     createTickerFile(fileNames);
      
-     //pass file to create vector store file names in vector
      std::ifstream file("data/tickerFile.txt");
+
      if (!file.is_open()) {
          std::cerr << "FAILED to open tickerFile.txt\n";
      }
+     
      auto stocks = createVector(file);
-
-     //renderTicker(stocks);
      
     
+     
+     renderTicker(stocks);
+     
+
 
     return 0;
 }

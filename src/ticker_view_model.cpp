@@ -30,19 +30,24 @@ std::vector<std::string> fillSource(const std::vector<stockClass>& stocks){
         
         oss << std::left
         << stock.getTicker()
+        << " Open: "
         << stock.getOpen()
+        << " High: "
         << stock.getHigh()
+        << " Low: "
         << stock.getLow()
+        << " Close: "
         << stock.getClose()
+        << " Volume: "
         << stock.getVolume();
         
         tempLine = oss.str();
-        
+    
+        //test case std::cout << tempLine << std::endl;
         
         source.at(counter) = tempLine;
         
         counter++;
-        
     }
     
     return source;
