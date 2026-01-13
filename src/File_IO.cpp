@@ -12,6 +12,7 @@
 #include <vector>
 #include <stdexcept>
 #include <cpr/cpr.h>
+#include <filesystem>
 #include "File_IO.h"
 
 //---------------------------------------------------------------------------------------------------------------------------------//
@@ -64,6 +65,9 @@ void createTickerFile(const std::vector<std::string>& fileFolder){
     }
     
     for(const auto& file : fileFolder){
+        if(file == "data/tickerFile.txt"){
+            continue;
+        }
         fromFile.open(file);
         std::string line; // stores lastet data from each file
         

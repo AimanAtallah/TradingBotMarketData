@@ -9,7 +9,7 @@
 #include "stockClass.h"
 #include "ticker_view.h"
 #include "createVector.h"
-
+#include "main_menu.h"
 
 
  int main(){
@@ -23,13 +23,13 @@
      
      std::ifstream file("data/tickerFile.txt");
 
-     if (!file.is_open()) {
+     if (!file) {
          std::cerr << "FAILED to open tickerFile.txt\n";
+         return 1;
      }
      
      auto stocks = createVector(file);
      
-    
      
      renderTicker(stocks);
      

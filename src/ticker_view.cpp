@@ -13,6 +13,7 @@
 #include "stockClass.h"
 #include "ticker_view_model.h"
 #include "ticker_view.h"
+#include "main_menu.h"
 
 //---------------------------------------------------------------------------------------------------------------------------------//
 
@@ -30,24 +31,24 @@ void renderTicker(const std::vector<stockClass>& stocks){
     std::vector<std::string> tickerData(num_of_stocks);
 
     while(true){
-        
         tickerData.at(0) = source.at(counter);
         
         counter = (counter + 1) % num_of_stocks;
         
         clearScreen();
+
         //Load Stocks
         for(int i = num_of_stocks - 1; i > FIRST_ELEMENT; --i){
             tickerData.at(i) = tickerData.at(i - OFFSET);
         }
-
+        
         //Display Stocks
         for(int i = DISPLAY_LIMIT; i > FIRST_ELEMENT; --i){
                 std::cout << tickerData.at(i);
         }
-    
-        std::cout << std::flush;
         
+        std::cout << std::flush;
+        printMainMenu();
         std::this_thread::sleep_for(std::chrono::seconds(2));
         
     }

@@ -57,13 +57,11 @@ stockClass parse_data(const std::string& line){
 std::vector<stockClass> createVector(std::ifstream& fileReader){
     std::vector<stockClass> stocks;
     std::string line;
-    int count = 0;
     
     while (std::getline(fileReader, line)) {
         if (line.empty()) continue;
         try {
             stocks.push_back(parse_data(line));
-            count++;
         } catch (const std::exception& e) {
             std::cerr << "PARSE ERROR on line:\n" << line << "\n";
             std::cerr << e.what() << "\n";
