@@ -9,11 +9,12 @@
 #define MAIN_MENU_H
 
 
-#include <iostream>
-#include <iomanip>
-
-
 void printMainMenu();
+void buySellStocksMenu();
+void priceLookUpMenu();
+void buySellCrypto();
+void tradingBotMenu();
+
 
 
 #endif // !MAIN_MENU_H

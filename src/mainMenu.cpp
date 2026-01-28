@@ -30,3 +30,9 @@ void printMainMenu(){
     std::cout << std::setw(50) << std::setfill('-') << "-\n";
     std::cout << std::setw(50) << std::setfill('-') << "-\n";
 }
+//todo: finish the menu views
+void buySellStocksMenu(){};
+void priceLookUpMenu(){};
+void buySellCrypto(){};
+void tradingBotMenu(){};
+
